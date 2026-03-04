@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>MFA Verification</title>
+
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-container">
+
+        <h2>MFA Verification</h2>
+
+        <form method="POST" action="/mfa">
+
+            <input name="otp" placeholder="Enter OTP" required>
+
+            <button type="submit">Verify</button>
+
+        </form>
+
+        <% if (typeof error !=="undefined" ) { %>
+
+            <p class="error">
+                <%= error %>
+            </p>
+
+            <% } %>
+
+    </div>
+
+</body>
+
+</html>

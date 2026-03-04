@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Fold — Modern Notes</title>
+
+    <link rel="stylesheet" href="/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+</head>
+
+<body>
+
+    <header class="app-header">
+
+        <div class="logo">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>The Fold</span>
+        </div>
+
+        <div class="header-right">
+
+            <span class="welcome-text">
+                <i class="fa-solid fa-user"></i> Welcome
+            </span>
+
+            <% if (!mfa_enabled) { %>
+
+                <button onclick="window.location='/setup-mfa'" class="mfa-btn">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    Enable MFA
+
+                </button>
+
+                <% } else { %>
+
+                    <button class="mfa-btn mfa-enabled" disabled>
+
+                        <i class="fa-solid fa-check"></i>
+
+                        MFA Enabled
+
+                    </button>
+
+                    <% } %>
+
+
+                        <a href="/logout" class="logout-btn">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            Logout
+                        </a>
+
+        </div>
+
+    </header>
+
+
+    <main class="notes-grid">
+
+        <% notes.forEach(function(note) { %>
+
+            <div class="note-card fade-in">
+
+                <div class="note-body">
+
+                    <h3>
+                        <%= note.title %>
+                    </h3>
+
+                    <p>
+                        <%= note.content %>
+                    </p>
+
+                </div>
+
+                <div class="note-footer">
+
+                    <button onclick="openEditModal(this)" data-id="<%= note.id %>" data-title="<%= note.title %>"
+                        data-content="<%= note.content %>">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                    </button>
+
+                    <button onclick="handleNoteDeletion('<%= note.id %>')">
+
+                        <i class="fa-solid fa-trash"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <% }); %>
+
+    </main>
+
+
+
+    <!-- Floating Button -->
+
+    <button class="floating-btn" onclick="openCreateModal()">
+        <i class="fa-solid fa-plus"></i>
+    </button>
+
+
+
+    <!-- Modal -->
+
+    <div id="modal" class="modal">
+
+        <div class="modal-card">
+
+            <h2 id="modalTitle">Create Note</h2>
+
+            <form onsubmit="handleNoteSubmit(event)">
+
+                <input type="hidden" id="note_id">
+
+                <input type="hidden" id="form_method" value="POST">
+
+                <input type="text" id="note_title_input" placeholder="Title" required>
+
+                <textarea id="note_content_input" placeholder="Write your note..." required></textarea>
+
+                <div class="modal-buttons">
+
+                    <button type="submit" class="primary-btn">
+                        Save
+                    </button>
+
+                    <button type="button" class="secondary-btn" onclick="closeModal()">
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="/app.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Setup MFA</title>
+
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-container">
+
+        <h2>Scan QR Code</h2>
+
+        <img src="data:image/png;base64,<%= qr_code %>" width="200">
+
+        <p>
+
+            Scan with Google Authenticator
+
+        </p>
+
+        <form method="POST" action="/setup-mfa">
+
+            <input name="otp" placeholder="Enter OTP" required>
+
+            <button>
+
+                Verify MFA
+
+            </button>
+
+        </form>
+
+        <% if (typeof error !=="undefined" ) { %>
+
+            <p class="error">
+
+                <%= error %>
+
+            </p>
+
+            <% } %>
+
+    </div>
+
+</body>
+
+</html>
